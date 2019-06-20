@@ -75,3 +75,18 @@ func (c *Client) CancelPayoutItem(payoutItemID string) (*PayoutItemResponse, err
 
 	return response, nil
 }
+
+func (c *Client) GetPayoutItem(paymentID string) (*PaymentResponse, error) {
+	req, err := c.NewRequest("GET", fmt.Sprintf("%s%s", c.APIBase, "/v1/payments/payment/"+paymentID), nil)
+	response := &PaymentResponse{}
+
+	if err != nil {
+		return response, err
+	}
+
+	if err = c.SendWithAuth(req, response); err != nil {
+		return response, err
+	}
+
+	return response, nil
+}
